@@ -7,10 +7,10 @@ function setup() {
   frameRate(30);
   bubbleSort = new BubbleSort(20, 20, windowWidth * 0.8, windowHeight * 0.3);
   bubbleSort2 = new BubbleSort(
-    150,
-    400,
+    50,
+    windowHeight * 0.3 + 60,
     windowWidth * 0.5,
-    windowHeight * 0.55
+    windowHeight - windowHeight * 0.3 - 100
   );
   bubbleSort.shuffle();
   bubbleSort2.shuffle();
