@@ -6,14 +6,15 @@ class Maze {
     this.height = int(h);
     this.title = title;
     this.init();
+    // this.stop = 100;
   }
 
   init() {
     this.margin = 10;
-    this.top = 70;
+    this.top = 90;
     this.data = [];
-    this.columns = int(random(100) + 4);
-    this.maxRecursion = 10;
+    this.columns = int(random(50) + 4);
+    this.maxRecursion = 100;
     this.currentRecursion = 0;
 
     if (this.columns * 5 > this.width - this.margin * 2) this.columns = 5;
@@ -74,6 +75,7 @@ class Maze {
   }
 
   gerenateMoves() {
+    // console.log('gerenateMoves');
     // return true;
     this.currentRecursion++;
     const newPosition = this.doRandomMove(this.player);
@@ -102,13 +104,77 @@ class Maze {
       // console.log('het duong');
       // pop stack
       //   console.log('count', this.count, this.totalCells);
-      if (this.count >= this.totalCells) return false;
+      if (this.count >= this.totalCells) {
+        const hint = 'Nhấp chuột để tìm lối ra';
+        fill('blue');
+        textSize(20);
+        text(hint, this.x + this.width / 2 - textWidth(hint) / 2, this.y + 75);
+        return false;
+      }
       const oldPosition = this.player;
       this.player = this.stack.pop();
       this.drawPath(oldPosition, this.player);
 
       return this.gerenateMoves();
     }
+    const hint = 'Nhấp chuột để tìm lối ra';
+    fill('blue');
+    textSize(20);
+    text(hint, this.x + this.width / 2 - textWidth(hint) / 2, this.y + 75);
+    return false;
+  }
+
+  startFindPath() {
+    this.currentRecursion = 0;
+    this.drawPlayer(this.player, true);
+    this.data[0][0].type = CellType.START;
+    this.data[this.rows - 1][this.columns - 1].type = CellType.EXIT;
+    this.player = this.data[0][0];
+    this.player.direction = Direction.RIGHT;
+    this.player.type = CellType.SOLUTION;
+  }
+
+  findPath() {
+    this.drawPlayer(this.player, true);
+    if (this.player.type !== CellType.EXIT) {
+      this.player.type = CellType.SOLUTION;
+      if (
+        this.player.around[(this.player.direction + 1) % 4] ===
+        BorderType.NOWALL
+      ) {
+        const newPosition = this.data[
+          this.player.row +
+            (this.player.direction === Direction.RIGHT
+              ? 1
+              : this.player.direction === Direction.LEFT
+              ? -1
+              : 0)
+        ][
+          this.player.column +
+            (this.player.direction === Direction.TOP
+              ? 1
+              : this.player.direction === Direction.BOTTOM
+              ? -1
+              : 0)
+        ];
+        this.player.direction = (this.player.direction + 1) % 4;
+        newPosition.direction = this.player.direction;
+        this.drawSolutionPath(
+          this.player,
+          newPosition.type === CellType.SOLUTION ? 'SaddleBrown' : 'Green',
+          newPosition.type === CellType.SOLUTION ? -1 : this.player.direction
+        );
+        this.player = newPosition;
+        this.drawPlayer(this.player, false);
+        return true;
+      } else {
+        this.player.direction = this.player.direction - 1;
+        if (this.player.direction === -1) this.player.direction = 3;
+        this.drawPlayer(this.player, false);
+        return this.findPath();
+      }
+    }
+    this.drawPlayer(this.player, false);
     return false;
   }
 
@@ -150,15 +216,60 @@ class Maze {
       this.cellSize - this.padding * 2
     );
 
-    fill('red');
+    this.drawPlayer(to, false);
+  }
+
+  drawPlayer(player, clean) {
+    if (clean) fill('grey');
+    else fill('red');
     // strokeWeight(2);
+    noStroke();
     // ellipseMode(CORNER);
     ellipse(
-      this.x + this.margin + to.column * this.cellSize + this.cellSize / 2,
-      this.y + this.top + to.row * this.cellSize + this.cellSize / 2,
+      this.x + this.margin + player.column * this.cellSize + this.cellSize / 2,
+      this.y + this.top + player.row * this.cellSize + this.cellSize / 2,
+      this.cellSize - this.padding * 4 + (clean ? 1 : 0),
+      this.cellSize - this.padding * 4 + (clean ? 1 : 0)
+    );
+  }
+
+  drawSolutionPath(player, color, direction) {
+    fill(color);
+    noStroke();
+    ellipse(
+      this.x + this.margin + player.column * this.cellSize + this.cellSize / 2,
+      this.y + this.top + player.row * this.cellSize + this.cellSize / 2,
       this.cellSize - this.padding * 4,
       this.cellSize - this.padding * 4
     );
+    if (direction > -1) {
+      const dir =
+        direction === Direction.TOP
+          ? '↑'
+          : direction === Direction.RIGHT
+          ? '→'
+          : direction === Direction.BOTTOM
+          ? '↓'
+          : direction === Direction.LEFT
+          ? '←'
+          : '';
+      fill('white');
+      textSize(this.cellSize / 2 - this.padding);
+      text(
+        dir,
+        this.x +
+          this.margin +
+          player.column * this.cellSize +
+          this.cellSize / 2 -
+          textWidth(dir) / 2,
+        this.y +
+          +this.top +
+          player.row * this.cellSize +
+          this.cellSize / 2 +
+          this.cellSize / 4 -
+          this.padding * 1.2
+      );
+    }
   }
 
   doRandomMove(player) {
@@ -184,21 +295,14 @@ class Maze {
         }
       }
     }
-    // console.log('moves', moves);
     const r = int(random(moves.length));
-    // console.log('r', r);
-    // return null;
     if (moves[r] === Direction.TOP) {
-      //   console.log('TOP', player);
       return this.data[player.row - 1][player.column];
     } else if (moves[r] === Direction.RIGHT) {
-      //   console.log('RIGHT', player, this.data[player.row][player.column + 1]);
       return this.data[player.row][player.column + 1];
     } else if (moves[r] === Direction.BOTTOM) {
-      //   console.log('BOTTOM', player, this.data[player.row + 1][player.column]);
       return this.data[player.row + 1][player.column];
     } else if (moves[r] === Direction.LEFT) {
-      //   console.log('LEFT', player.column - 1);
       return this.data[player.row][player.column - 1];
     }
     return null;
@@ -209,12 +313,13 @@ class Maze {
     fill('WhiteSmoke');
     rect(this.x, this.y, this.width, this.height);
     fill('blue');
-    textSize(40);
+    textSize(38);
     text(
       this.title,
       this.x + this.width / 2 - textWidth(this.title) / 2,
       this.y + 50
     );
+
     fill('black');
     rect(
       this.x + this.margin - 2,

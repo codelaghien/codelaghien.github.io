@@ -15,6 +15,7 @@ class Cell {
     ];
 
     this.type = CellType.EMPTY;
+    this.direction = Direction.RIGHT;
   }
 
   getDirection(cell) {
