@@ -14,23 +14,24 @@ function setup() {
   frameRate(30);
   for (let i = 0; i < streamCount; i++) {
     streams.push(
-      new MyStream(fontSize, i * fontSize, height, random(1, fontSize * 0.5))
+      new MyStream(fontSize, i * fontSize, height, random(1, streamCount))
     );
   }
 }
 
 function draw() {
-  background(0, 120);
+  background(0, 170);
+  // for (let i = 0; i < streamCount; i++) {
+  //   streams[i].draw();
+  // }
+  streams.forEach(stream => {
+    stream.draw();
+  });
   writeAuthor();
-  for (let i = 0; i < streams.length; i++) {
-    streams[i].draw();
-    streams[i].drop();
-  }
 }
 
 function writeAuthor() {
   let title = ' Code là Ghiền ';
-  //   title = ' Hướng dẫn học lập trình ';
   let size = fontSize * 6;
   fill('white');
   textSize(size);
@@ -38,8 +39,6 @@ function writeAuthor() {
     size -= 1;
     textSize(size);
   }
-  //   title = 'Code là Ghiền';
-  //   textSize(size);
   text(title, (width - textWidth(title)) / 2, height / 2 - size * 0.5);
   title = 'Hướng dẫn học lập trình';
   fill(color(83, 255, 26));
