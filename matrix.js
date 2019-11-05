@@ -14,7 +14,7 @@ function setup() {
   frameRate(30);
   for (let i = 0; i < streamCount; i++) {
     streams.push(
-      new MyStream(fontSize, i * fontSize, height, random(1, streamCount))
+      new MyStream(fontSize, i * fontSize, height, random(1, streamCount / 2))
     );
   }
 }
