@@ -3,6 +3,9 @@ let width;
 let height;
 let streams = [];
 let streamCount = 0;
+const switchChar = 500;
+let switchCharCount = switchChar;
+let charSymbol = true;
 
 function setup() {
   width = windowWidth - 10;
@@ -14,13 +17,19 @@ function setup() {
   frameRate(30);
   for (let i = 0; i < streamCount; i++) {
     streams.push(
-      new MyStream(fontSize, i * fontSize, height, random(1, streamCount / 3))
+      new MyStream(
+        fontSize,
+        charSymbol,
+        i * fontSize,
+        height,
+        random(1, streamCount / 4)
+      )
     );
   }
 }
 
 function draw() {
-  background(0, 170);
+  background(0, 180);
   // for (let i = 0; i < streamCount; i++) {
   //   streams[i].draw();
   // }
@@ -28,6 +37,14 @@ function draw() {
     stream.draw();
   });
   writeAuthor();
+  switchCharCount--;
+  if (switchCharCount <= 0) {
+    switchCharCount = switchChar;
+    charSymbol = !charSymbol;
+    streams.forEach(stream => {
+      stream.changeSymbol(charSymbol);
+    });
+  }
 }
 
 function writeAuthor() {
