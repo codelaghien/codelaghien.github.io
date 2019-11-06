@@ -29,7 +29,7 @@ function setup() {
 }
 
 function draw() {
-  background(0, 180);
+  background(0, 160);
   // for (let i = 0; i < streamCount; i++) {
   //   streams[i].draw();
   // }

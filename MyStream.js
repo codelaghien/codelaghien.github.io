@@ -8,7 +8,7 @@ class MyStream {
     this.h = h;
     this.speed = speed;
     this.y = random(0, this.h - this.size);
-    this.chars = int((this.h / this.size) * 0.7);
+    this.chars = int((this.h / this.size) * 0.8);
     this.init();
   }
 
