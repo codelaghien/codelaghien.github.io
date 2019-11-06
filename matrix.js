@@ -22,7 +22,7 @@ function setup() {
         charSymbol,
         i * fontSize,
         height,
-        random(1, streamCount / 4)
+        random(1, streamCount / 2)
       )
     );
   }
