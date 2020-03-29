@@ -33,9 +33,18 @@ function TangThang() {
     console.log(' ');
 
     temp = '';
-    temp += '<br />Tháng thứ ' + thang;
-    temp += '<br />Tổng số thỏ = ' + tongSoTho;
-    temp += '<br />Tổng số thỏ bán = ' + tongSoThoBan;
+    temp +=
+        '<br />Tháng thứ <span style="font-size: x-large; color: orange;">' +
+        thang +
+        '</span>';
+    temp +=
+        '<br />Tổng số thỏ = <span style="font-size: x-large; color: blue;">' +
+        tongSoTho +
+        '</span>';
+    temp +=
+        '<br />Tổng số thỏ bán = <span style="font-size: x-large; color: red;">' +
+        tongSoThoBan +
+        '</span>';
     temp += '<br />';
     baocao.innerHTML = temp + baocao.innerHTML;
 }
