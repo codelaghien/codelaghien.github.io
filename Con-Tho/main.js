@@ -9,12 +9,11 @@ function TangThang() {
         baocao = document.getElementById('baocao');
     }
     thang++;
-    let themTho = 0;
     dansach.forEach(contho => {
         contho.age++;
         if (contho.age > 1) {
             tongSoTho++;
-            themTho++;
+            dansach.push({ age: 0, birth: 0, death: false });
             contho.birth++;
             if (contho.birth === 10) {
                 contho.death = true;
@@ -23,9 +22,6 @@ function TangThang() {
         }
     });
     dansach = dansach.filter(contho => !contho.death);
-    for (let i = 0; i < themTho; i++) {
-        dansach.push({ age: 0, birth: 0, death: false });
-    }
     console.log('Tháng thứ ' + thang);
     console.log('Tổng số thỏ = ' + tongSoTho);
     console.log('Tổng số thỏ bán = ' + tongSoThoBan);
