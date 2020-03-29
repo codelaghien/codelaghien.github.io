@@ -25,7 +25,9 @@ function TangThang() {
     console.log('Tháng thứ ' + thang);
     console.log('Tổng số thỏ = ' + tongSoTho);
     console.log('Tổng số thỏ bán = ' + tongSoThoBan);
-    console.log('Danh sách thỏ = ', dansach);
+    console.log('Danh sách thỏ:', dansach);
+    // console.log('Danh sách thỏ:');
+    // console.table(dansach);
     console.log(' ');
 
     temp = '';
