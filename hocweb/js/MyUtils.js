@@ -13,7 +13,7 @@ function submitLogin() {
 	// console.log('email = ' + sessionStorage.getItem('email'));
 	// window.location.replace('index.html');
 
-	$.get('http://codelaghien-001-site2.ftempurl.com/codelaghien/login.asp', {
+	$.get('https://codelaghien.club/web/login.asp', {
 		username: email,
 		password: password,
 	})
