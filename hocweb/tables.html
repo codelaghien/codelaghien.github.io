@@ -236,7 +236,7 @@
 					</div>
 					<div class="sb-sidenav-footer">
 						<div class="small">Logged in as:</div>
-						Start Bootstrap
+						<span id="loginAs"></span>
 					</div>
 				</nav>
 			</div>
@@ -264,11 +264,14 @@
 						</div>
 						<div class="card mb-4">
 							<div class="card-header">
-								<i class="fas fa-table mr-1"></i>DataTable
-								Example
+								<i class="fas fa-table mr-1"></i>
+								DataTable Example
+								<button onclick="refreshData()">
+									Lấy data ngẫu nhiên
+								</button>
 							</div>
 							<div class="card-body">
-								<div class="table-responsive">
+								<div class="table-responsive" id="myTableData">
 									<table
 										class="table table-bordered"
 										id="dataTable"
@@ -295,7 +298,7 @@
 												<th>Salary</th>
 											</tr>
 										</tfoot>
-										<tbody>
+										<tbody id="dataTableBodyID">
 											<tr>
 												<td>Tiger Nixon</td>
 												<td>System Architect</td>

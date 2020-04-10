@@ -1,16 +1,11 @@
 function submitLogin() {
-	// let email = document.getElementById('inputEmailAddress').value;
-	// let password = document.getElementById('inputPassword').value;
 	let email = $('#inputEmailAddress').val();
 	let password = $('#inputPassword').val();
-	console.log('submitLogin: email = ', email);
-	console.log('submitLogin: password = ', password);
+	// console.log('submitLogin: email = ', email);
+	// console.log('submitLogin: password = ', password);
 
 	sessionStorage.setItem('email', email);
 	sessionStorage.setItem('password', password);
-
-	// console.log('email = ' + sessionStorage.getItem('email'));
-	// window.location.replace('index.html');
 
 	$.post('https://codelaghien.club/web/login.asp', {
 		username: email,
@@ -34,4 +29,32 @@ function logout() {
 	sessionStorage.setItem('email', '');
 	sessionStorage.setItem('password', '');
 	window.location.replace('login.html');
+}
+
+function refreshData() {
+	console.log('refreshData');
+	$('#dataTable_wrapper').remove();
+	$('#myTableData').append(
+		'<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"></table>'
+	);
+	const columns = [
+		{ data: 'name.first', title: 'Tên' },
+		{ data: 'gender', title: 'Giới tính' },
+		{ data: 'email', title: 'Điện thư' },
+		{ data: 'phone', title: 'Điện thoại' },
+		{
+			data: 'picture.thumbnail',
+			title: 'Hình',
+			render: function (url, type, full) {
+				return '<img height="50" src="' + url + '"/>';
+			},
+		},
+	];
+	$('#dataTable').DataTable({
+		ajax: {
+			url: 'https://randomuser.me/api/?results=100',
+			dataSrc: 'results',
+		},
+		columns: columns,
+	});
 }
