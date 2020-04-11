@@ -31,30 +31,7 @@ function logout() {
 	window.location.replace('login.html');
 }
 
-function refreshData() {
-	console.log('refreshData');
-	$('#dataTable_wrapper').remove();
-	$('#myTableData').append(
-		'<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0"></table>'
-	);
-	const columns = [
-		{ data: 'name.first', title: 'Tên' },
-		{ data: 'gender', title: 'Giới tính' },
-		{ data: 'email', title: 'Điện thư' },
-		{ data: 'phone', title: 'Điện thoại' },
-		{
-			data: 'picture.thumbnail',
-			title: 'Hình',
-			render: function (url, type, full) {
-				return '<img height="50" src="' + url + '"/>';
-			},
-		},
-	];
-	$('#dataTable').DataTable({
-		ajax: {
-			url: 'https://randomuser.me/api/?results=100',
-			dataSrc: 'results',
-		},
-		columns: columns,
-	});
+function loadTable() {
+	console.log('loadTable');
+	$('#MyMain').load('tables2.html');
 }
