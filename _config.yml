@@ -1,0 +1,18 @@
+# Site settings
+title: Code là Ghiền !
+description: Code là Ghiền !
+baseurl: "codelaghien.github.io"
+url: "codelaghien.github.io"
+
+# User settings
+username: Code là Ghiền !
+user_description: Code là Ghiền là channel để giúp cho các bạn yêu thích ngành công nghệ thông tin hay lập trình tìm hiểu thêm kiến thức mới, thảo luận hay chia sẻ kinh nghiệm để cùng nhau hiểu nhiều hơn về máy tính và những kỷ thuật mới để áp dụng cho cuộc sống chúng ta ngày càng tuyệt vời hơn. Huy Nguyễn
+
+user_title: Software Developer
+email: codelaghien@gmail.com
+
+# Google-analytics
+google-analytics:
+  id: ""
+
+exclude: ['package.json', 'src' , 'node_modules']
